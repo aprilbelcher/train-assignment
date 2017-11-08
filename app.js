@@ -16,10 +16,10 @@
       event.preventDefault();
 
   
-   console.log($("#name-input").val());
-   console.log($("#dest-input").val());
-   console.log($("#time-input").val());
-   console.log($("#freq-input").val());
+   // console.log($("#name-input").val());
+   // console.log($("#dest-input").val());
+   // console.log($("#time-input").val());
+   // console.log($("#freq-input").val());
 
 
 
@@ -51,85 +51,38 @@ database.ref().on('child_added', function(data) {
  td5.attr("id", "tdMinutes");
 
 // data.forEach(function(childSnapshot){
-console.log(data.val().name);
-console.log(data.val().destination);
-console.log(data.val().frequency);
+
 // console.log(data.val().next);
 // console.log(data.val().minutes);
   var trs = $("<tr>");
+var nextArr = getNextArrival(data.val().frequency, data.val().time)
+var minsAway = minutesAway(nextArr);
+
 
 td1.append(data.val().name);
 td2.append(data.val().destination);
 td3.append(data.val().frequency);
-// td5.append(data.val().next);
-// td6.append(data.val().minutes);
+td4.append(nextArr);
+td5.append(minsAway);
 trs.append(td1, td2, td3, td4, td5);
 $(".table").append(trs);
 
 
-// var d = new Date();
-
-// var month = d.getMonth()+1;
-// var year = d.getFullYear();
-
-// var currentdate = data.val().date;
-
-// currentdate = currentdate.split("-");
-// console.log(currentdate);
-// // currentdate.indexOf(0);
-
-// console.log(currentdate[0]);
-// console.log(currentdate[1]);
-
-// console.log(data.val().date);
 
 
 });
 
+    function getNextArrival(freq, strtTime){
+        var currentTime = moment().unix();
+        var startTime = moment(strtTime, "HH:mm").unix();
 
-// function maths (startdate){
-
-//   var d = new Date();
-
-// var month = d.getMonth()+1;
-// var year = d.getFullYear();
-// console.log(month, year);
-// var startdate = startdate.split("-");
-// console.log(parseInt(startdate[0]));
-// var totalmonth = (parseInt(startdate[0]) - year)*12 + (parseInt(startdate[0]) - month);
-// return totalmonth;
-
-
-// }
-
-//  console.log(maths());
-//=======================================================//
-  // $("#add-schedule").on("click", function() {
-  // event.preventDefault();
-
-  // name = $("#name-input").val();
-  // destination = $("#dest-input").val();
-  // time = $("#time-input").val();
-  // frequency = $("#freq-input").val();
-
-  // database.ref().push({
-  //   name: $("#name-input").val()
-  //   destination: $("#dest-input").val(),
-  //   time: $("#time-input").val(),
-  //   frequency: $("#freq-input").val(),
-  //    });
-  // });
-
-  // database.ref().on("value", function(snapshot) {
-  // 	  console.log(snapshot.val());
-
-  // 	  console.log(snapshot.val().name);
-  //     console.log(snapshot.val().destination);
-  //     console.log(snapshot.val().time);
-  //     console.log(snapshot.val().frequency);
-
-  // // $("#trainScheduleList").text(snapshot.val().name + " | " + snapshot.val().destination + " | " + snapshot.val().time + " | " + snapshot.val().frequency);
-
-  //     }, function(errorObject) {
-  //     console.log("The read failed: " + errorObject.code);
-  // });
+        while (startTime < currentTime){
+            startTime = moment.unix(startTime).add(freq, 'm').unix();
+        }
+        return moment.unix(startTime).format("HH:mm")
+    }
+    function minutesAway(nextArrival){
+        var currentTime = moment().unix();
+        //return moment().subtract(nextArrival, 'h')
+        return moment(nextArrival, "HH:mm").subtract(currentTime, 's').format("mm");
+    }
