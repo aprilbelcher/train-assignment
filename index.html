@@ -22,13 +22,20 @@
 	  <div class="panel panel-default" id="firstRow">
 		<div class="panel-heading">
     	  <h3 class="panel-title"><i class="currentSchedule"></i>Current Train Schedule</h3></div>
-		  <div class="panel-body" id="trainScheduleList">
-        </div>
-      </div>
-     </div>
-    </div>
 
- 		<!-- Add Train -->
+        <table class="table">
+            <tr>
+              <th>Train Name</th>
+              <th>Destination</th>
+              <th>Frequency</th>
+              <th>Next Arrival</th>
+              <th>Minutes Away</th>
+            </tr>
+        </table>
+      </div>
+    </div>
+  </div>
+      <!-- Add Train -->
       <div class="row">
         <div class="col-sm-12">
           <div class="panel panel-default" id="secondRow">
@@ -47,20 +54,23 @@
               </div>
               <div class="form-group">
                 <label for="time-input">First Train Time (HH:mm - military time)</label>
-                <input class="form-control" id="time-input" type="number">
+                <input class="form-control" id="time-input" type="time">
               </div>
               <div class="form-group">
                 <label for="freq-input">Frequency (min):</label>
                 <input class="form-control" id="freq-input" type="number">
               </div>
-              <button class="btn btn-default" id="add-schedule" type="submit">Submit</button>
+              <button class="btn btn-default" id="add-schedule" type="submit"><strong>Submit</strong></button>
             </form>
           </div>
         </div>
       </div>
+    </div>
+  </div>
 
-</div>
-
+<script src="https://www.gstatic.com/firebasejs/4.6.1/firebase.js"></script>
 <script src="app.js"></script>
+
+
 </body>
 </html>

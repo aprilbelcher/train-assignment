@@ -39,3 +39,20 @@
 .panel-title {
 	color: white;
 }
+
+td {
+  text-align: center;
+}
+
+th {
+  text-align: center;
+}
+
+#add-schedule {
+  background-color: #e67e21;
+  color: white;
+
+}
+#add-schedule: hover{
+     background-color: #FF5F49;
+}
